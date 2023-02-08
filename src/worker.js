@@ -66,14 +66,11 @@ async function fetchTree() {
 
     const minerAddress = await resolver.resolve(torn.miningV2.address)
     const instance = new web3.eth.Contract(miningABI, minerAddress)
-    const data =
-      currentJob.data.type === 'MINING_REWARD'
+    const data = currentJob.data.type === 'MINING_REWARD'
         ? instance.methods.reward(proof, args, update.proof, update.args).encodeABI()
         : instance.methods.withdraw(proof, args, update.proof, update.args).encodeABI()
-    await currentTx.replace({
-      to: minerAddress,
-      data,
-    })
+  
+    await currentTx.replace({to: minerAddress, data})
     console.log('replaced pending tx')
   }
 }
@@ -316,8 +313,8 @@ async function submitTx(job, retry = 0) {
       }
     }
   } catch (e) {
-    // todo this could result in duplicated error logs
-    // todo handle a case where account tree is still not up to date (wait and retry)?
+    // todo 这可能会导致重复的错误日志 
+    // todo 处理帐户树仍然不是最新的情况（等待并重试）？
     if (
       job.data.type !== jobType.TORNADO_WITHDRAW &&
       (e.message.indexOf('Outdated account merkle root') !== -1 ||

@@ -27,6 +27,6 @@ curl -X POST -H 'content-type:application/json' --data '<input data>' http://127
 3. Controller 包含服务器端点的处理程序。它验证输入数据并将作业添加到队列。
 4. Queue module 被Controller用来从队列中放置和获取Job（bull wrapper）
 5. Status module 包含获取作业状态的处理程序。它被 UI 用于拉取更新
-6. Validate 包含所有端点的验证逻辑
-7. Worker 是从队列中获取作业并处理它的主要模块
+6. Validate 验证端点逻辑
+7. Worker 从队列中取出作业并处理
  
